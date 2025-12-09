@@ -1,0 +1,142 @@
+# 智库工作流自动化系统配置文件
+# 本小姐精心设计的配置哦！(￣▽￣)／
+
+# AI 配置
+ai:
+  # 使用的 AI 模型提供商（支持 openai, anthropic, openrouter, local）
+  provider: "openrouter"
+
+  # API 配置
+  api_key: "your-api-key-here"  # 请替换为你的 API Key
+  model: "gpt-4"  # 或 "claude-3-sonnet-20240229"
+
+  # OpenRouter 配置（推荐使用！支持多种模型）
+  openrouter:
+    api_key: "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"  # 🔑 在这里填写你的 OpenRouter API Key
+    model: "deepseek/deepseek-v3.2-speciale"     # 🤖 在这里填写你要使用的模型名称
+    # 常用模型示例：
+    # - "anthropic/claude-3.5-sonnet" (推荐！本小姐最喜欢的模型)
+    # - "anthropic/claude-3-opus"
+    # - "openai/gpt-4-turbo"
+    # - "openai/gpt-4"
+    # - "google/gemini-pro"
+    # - "meta-llama/llama-3-70b-instruct"
+    base_url: "https://openrouter.ai/api/v1"  # OpenRouter API 端点
+    site_url: ""  # 可选：你的网站 URL（用于排行榜）
+    app_name: "智库工作流自动化系统"  # 可选：应用名称
+
+  # 本地模型配置（如果使用本地模型）
+  local_model:
+    endpoint: "http://localhost:11434"  # Ollama 默认端点
+    model_name: "llama2"
+
+  # 生成参数
+  temperature: 0.7
+  max_tokens: 2000
+
+# 工作目录配置
+directories:
+  # 每日工作区
+  daily_workspace: "00-每日工作区"
+
+  # 行业研究库
+  industry_library: "03-行业研究库"
+
+  # 专题研究库
+  topic_library: "04-专题研究库"
+
+  # 待处理材料
+  pending_materials: "00-每日工作区/01-待处理材料"
+
+  # 三行摘要收集
+  summary_collection: "00-每日工作区/03-三行摘要收集"
+
+  # 日志目录
+  logs: "logs"
+
+# PIDST 五维框架配置
+pidst:
+  dimensions:
+    - name: "Policy"
+      label: "政策"
+      keywords: ["政策", "法规", "文件", "通知", "意见"]
+
+    - name: "Industry"
+      label: "行业"
+      keywords: ["产业", "行业", "市场", "企业", "竞争"]
+
+    - name: "Data"
+      label: "数据"
+      keywords: ["数据", "统计", "报告", "调研", "指标"]
+
+    - name: "Signals"
+      label: "信号"
+      keywords: ["舆情", "动态", "趋势", "变化", "异常"]
+
+    - name: "Technology"
+      label: "技术"
+      keywords: ["技术", "创新", "研发", "应用", "突破"]
+
+# 分析配置
+analysis:
+  # 每日最少洞察数量
+  min_insights: 3
+
+  # 证据链维度
+  evidence_chain:
+    - "F"  # Facts - 事实
+    - "D"  # Data - 数据
+    - "P"  # Policy - 政策
+    - "T"  # Trend - 趋势
+    - "S"  # Signal - 弱信号
+
+  # 重要程度标记
+  importance_levels:
+    high: "🔴"
+    medium: "🟡"
+    low: "🟢"
+
+# 知识库配置
+knowledge_base:
+  # 自动归档
+  auto_archive: true
+
+  # 标签生成
+  auto_tagging: true
+
+  # 索引更新频率（天）
+  index_update_interval: 1
+
+  # 相似度阈值（用于关联发现）
+  similarity_threshold: 0.75
+
+# 任务调度配置
+scheduler:
+  # 每日任务提醒时间
+  daily_reminder: "09:00"
+
+  # 复盘提醒时间
+  review_reminder: "18:00"
+
+  # 工作日设置（1=周一, 7=周日）
+  workdays: [1, 2, 3, 4, 5]
+
+# 输出模板配置
+templates:
+  # 三行摘要模板
+  three_line_summary: "templates/three_line_summary.md"
+
+  # 洞察模板
+  insight: "templates/insight_template.md"
+
+  # 证据链模板
+  evidence_chain: "templates/evidence_chain.md"
+
+  # 每日总结模板
+  daily_summary: "templates/daily_summary.md"
+
+# 日志配置
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/workflow.log"
