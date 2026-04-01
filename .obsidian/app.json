@@ -1,0 +1,17 @@
+{
+  "strictLineBreaks": false,
+  "showLineNumber": true,
+  "defaultViewMode": "source",
+  "livePreview": true,
+  "readableLineLength": true,
+  "autoConvertHtml": true,
+  "attachmentFolderPath": "engineering_assets/attachments",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "alwaysUpdateLinks": true,
+  "showFrontmatter": true,
+  "foldHeading": true,
+  "foldIndent": true,
+  "promptDelete": false,
+  "vimMode": false
+}

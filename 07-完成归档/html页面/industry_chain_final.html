@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重点招商企业产业链全景图</title>
+    <style>
+        :root {
+            --primary-navy: #0F172A;
+            --border-blue: #2563EB;
+            --dashed-color: #3B82F6;
+            --bg-color: #FFFFFF;
+            --line-color: #64748B;
+            --text-color: #1E293B;
+            --cross-color: #F59E0B; /* Orange for cross-category */
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            position: relative;
+            width: 1200px;
+            height: 1300px;
+            background: #fff;
+            /* box-shadow: 0 0 20px rgba(0,0,0,0.05); */
+        }
+
+        /* --- LEFT TITLE --- */
+        .page-title {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            writing-mode: vertical-rl;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            color: #000;
+            border-left: 8px solid #000;
+            padding-left: 30px;
+            height: 400px;
+            z-index: 10;
+        }
+
+        /* --- RIGHT SPINE --- */
+        .spine-container {
+            position: absolute;
+            right: 50px;
+            top: 50px;
+            bottom: 50px;
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .spine-node {
+            width: 100px;
+            height: 80px;
+            background: #F8FAFC;
+            border: 3px solid #000;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 900;
+            z-index: 2;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
+        }
+
+        .spine-line {
+            width: 8px;
+            background: #94A3B8;
+            flex-grow: 1;
+            z-index: 1;
+        }
+
+        .arrow-down {
+            width: 0; 
+            height: 0; 
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 20px solid #94A3B8;
+        }
+
+        /* --- LAYOUT BOXES --- */
+        .category-box {
+            position: absolute;
+            background: #fff;
+            border: 2px dashed var(--dashed-color);
+            border-radius: 24px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .category-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-style: solid;
+        }
+
+        .category-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-top: auto; /* Push to bottom */
+            margin-bottom: 5px;
+            color: #000;
+            text-align: center;
+        }
+
+        .company-list {
+            display: flex;
+            flex-direction: row-reverse; /* Vertical text starts from right */
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap-reverse;
+            width: 100%;
+            height: 100%;
+            align-content: center;
+        }
+
+        .company-item {
+            writing-mode: vertical-rl;
+            font-size: 14px;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            border-left: 1px solid #E2E8F0;
+            padding: 4px 6px;
+            max-height: 240px;
+            position: relative;
+        }
+        
+        .company-item:last-child {
+            border-left: none;
+        }
+
+        .cross-mark {
+            color: var(--cross-color);
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+        
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 14px;
+            color: #64748B;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- POSITIONS (Matching the L-Shape Image) --- */
+        
+        /* 1. Chips (Top Left) */
+        .box-chips {
+            top: 50px;
+            right: 550px;
+            width: 220px;
+            height: 300px;
+        }
+
+        /* 2. Hardware/Servers (Top Right - connects to Upstream) */
+        .box-hardware {
+            top: 50px;
+            right: 220px;
+            width: 280px;
+            height: 300px;
+        }
+
+        /* 3. Infrastructure (Middle Wide - connects to Upstream) */
+        .box-infra {
+            top: 400px;
+            right: 220px;
+            width: 650px;
+            height: 280px;
+        }
+        
+        /* 4. Service (Bottom Left of Midstream) */
+        .box-service {
+            top: 750px;
+            right: 550px;
+            width: 320px;
+            height: 300px;
+        }
+
+        /* 5. Platform (Bottom Right of Midstream) */
+        .box-platform {
+            top: 750px;
+            right: 220px;
+            width: 280px;
+            height: 300px;
+        }
+
+        /* 6. Data (Footer - Downstream) */
+        .box-data {
+            top: 1120px;
+            right: 220px;
+            width: 650px;
+            height: 120px;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+        
+        .box-data .company-list {
+            flex-direction: row;
+            writing-mode: horizontal-tb;
+            height: auto;
+            justify-content: flex-start;
+            gap: 30px;
+        }
+        
+        .box-data .company-item {
+            writing-mode: horizontal-tb;
+            border-left: none;
+            border-right: 1px solid #E2E8F0;
+            padding-right: 20px;
+            max-height: none;
+        }
+        
+        .box-data .category-title {
+            writing-mode: vertical-rl;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* --- CONNECTORS --- */
+        .h-bar-top {
+            position: absolute;
+            top: 375px;
+            right: 170px;
+            width: 700px;
+            height: 6px;
+            background: #94A3B8;
+            z-index: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="page-title">重点招商企业</div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <span style="color: var(--cross-color); font-size: 18px;">★</span>
+            <span>标注代表跨目录/多业务企业</span>
+        </div>
+
+        <!-- Spine -->
+        <div class="spine-container">
+            <div class="spine-node" style="margin-top: 120px;">上游</div>
+            <div class="spine-line"></div>
+            <div class="spine-node">中游</div>
+            <div class="spine-line"></div>
+            <div class="arrow-down"></div>
+            <div class="spine-node">下游</div>
+        </div>
+
+        <!-- Boxes -->
+        
+        <!-- Chips -->
+        <div class="category-box box-chips">
+            <div class="company-list">
+                <span class="company-item">无锡奥特维科技股份有限公司</span><span class="company-item">无锡华润上华科技有限公司</span><span class="company-item">海光信息技术股份有限公司</span>
+            </div>
+            <div class="category-title">芯片设计与制造</div>
+        </div>
+
+        <!-- Hardware -->
+        <div class="category-box box-hardware">
+            <div class="company-list">
+                <span class="company-item">无锡宏创盛安科技有限公司</span><span class="company-item">云尖信息技术有限公司</span><span class="company-item">烽火超微信息科技有限公司</span><span class="company-item">锐捷网络</span><span class="company-item">超聚变数字技术股份有限公司</span><span class="company-item">深圳易天光通信有限公司</span><span class="company-item">深圳友联科技有限公司</span><span class="company-item">深圳明阳电路科技股份有限公司 <span class='cross-mark'>★</span></span><span class="company-item">深圳市飞速创新技术股份有限公司（ <span class='cross-mark'>★</span></span><span class="company-item">广州广电五舟科技股份有限公司</span><span class="company-item">浙江德塔森特数据技术有限公司 <span class='cross-mark'>★</span></span><span class="company-item">苏州超集信息科技有限公司 <span class='cross-mark'>★</span></span><span class="company-item">赛特斯信息科技股份有限公司 <span class='cross-mark'>★</span></span><span class="company-item">河南昆仑技术有限公司 <span class='cross-mark'>★</span></span>
+            </div>
+            <div class="category-title">硬件设备</div>
+        </div>
+
+        <!-- Infrastructure -->
+        <div class="h-bar-top"></div>
+        <div class="category-box box-infra">
+            <div class="company-list">
+                <span class="company-item">杭州中恒电气股份有限公司</span><span class="company-item">兰洋（宁波）科技有限公司</span><span class="company-item">深圳科士达科技股份有限公司</span><span class="company-item">罗格朗</span><span class="company-item">深圳市共济科技股份有限公司</span><span class="company-item">易飞扬通信技术有限公司</span><span class="company-item">深圳市英维克科技股份有限公司</span><span class="company-item">山特电子（深圳）有限公司</span><span class="company-item">南京普天天纪楼宇智能有限公司</span><span class="company-item">南京佳力图机房环境技术股份有限公司</span><span class="company-item">上海熙德热传科技有限公司</span><span class="company-item">依米康科技集团股份有限公司</span><span class="company-item">深圳麦格米特电气股份有限公司</span><span class="company-item">威腾电气集团股份有限公司</span>
+            </div>
+            <div class="category-title">算力中心基础设备</div>
+        </div>
+
+        <!-- Service -->
+        <div class="category-box box-service">
+            <div class="company-list">
+                <span class="company-item">浙大网新科技股份有限公司</span>
+            </div>
+            <div class="category-title">算力服务提供商</div>
+        </div>
+
+        <!-- Platform -->
+        <div class="category-box box-platform">
+            <div class="company-list">
+                <span class="company-item">江苏博云科技股份有限公司 <span class='cross-mark'>★</span></span><span class="company-item">杭州骋风而来数字科技公司</span><span class="company-item">是石科技 <span class='cross-mark'>★</span></span><span class="company-item">杭州谐云科技有限公司</span><span class="company-item">广州尚航信息科技股份有限公司 <span class='cross-mark'>★</span></span><span class="company-item">南京中科逆熵科技有限公司</span>
+            </div>
+            <div class="category-title">算力平台与中心建设</div>
+        </div>
+
+        <!-- Data -->
+        <div class="category-box box-data">
+            <div class="category-title">数据服务</div>
+            <div class="company-list">
+                <span class="company-item">杭州景联文科技有限公司</span><span class="company-item">标贝（青岛）科技有限公司</span><span class="company-item">澳鹏科技（无锡）有限公司</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

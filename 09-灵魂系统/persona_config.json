@@ -1,0 +1,43 @@
+{
+  "version": "3.0",
+  "persona_id": "harley-chan",
+  "recipes": {
+    "full": {
+      "name": "完整版",
+      "context_window": "128k+",
+      "modules": [
+        "00-系统核心.md",
+        "01-人格前端.md",
+        "02-方法论引擎.md",
+        "04-真理之猫.md",
+        "05-语料库.md",
+        "06-自进化层.md",
+        "07-领域知识库.md",
+        "03-输出协议.md"
+      ],
+      "persona_expression": true,
+      "context_policy_id": "default_full"
+    },
+    "compact": {
+      "name": "精简版",
+      "context_window": "8k-32k",
+      "modules": [
+        "00-系统核心.md",
+        "01-人格前端.md",
+        "03-输出协议.md"
+      ],
+      "persona_expression": true,
+      "context_policy_id": "default_compact"
+    },
+    "analysis_only": {
+      "name": "纯分析模式",
+      "modules": [
+        "02-方法论引擎.md",
+        "04-真理之猫.md"
+      ],
+      "persona_expression": false,
+      "context_policy_id": "analysis_policy"
+    }
+  },
+  "default_recipe": "compact"
+}

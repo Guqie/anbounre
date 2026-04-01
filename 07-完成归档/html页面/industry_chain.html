@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力产业链全景图</title>
+    <style>
+        :root {
+            --upstream-blue: #2962FF;   /* Hardware: Tech Blue */
+            --midstream-purple: #6200EA; /* Service: Deep Purple */
+            --downstream-orange: #FF6D00; /* Application: Active Orange */
+            --bg-color: #F0F2F5;
+            --card-bg: #FFFFFF;
+            --text-dark: #263238;
+            --text-grey: #546E7A;
+            --border-radius: 8px;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 1480px;
+            height: 630px;
+            background: #FFFFFF;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Header */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #F5F5F5;
+            padding-bottom: 15px;
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .main-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--upstream-blue), var(--downstream-orange));
+            border-radius: 3px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-grey);
+            font-weight: 500;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Chain Layout */
+        .chain-container {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3 Columns: Up, Mid, Down */
+            gap: 30px;
+            position: relative;
+        }
+
+        /* Column Styles */
+        .chain-column {
+            background: #FAFAFA;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border: 1px dashed #E0E0E0;
+            position: relative;
+        }
+
+        .col-header {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+            color: var(--theme-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Specific Column Themes */
+        .col-upstream { --theme-color: var(--upstream-blue); background: rgba(41, 98, 255, 0.02); border-color: rgba(41, 98, 255, 0.1); }
+        .col-midstream { --theme-color: var(--midstream-purple); background: rgba(98, 0, 234, 0.02); border-color: rgba(98, 0, 234, 0.1); }
+        .col-downstream { --theme-color: var(--downstream-orange); background: rgba(255, 109, 0, 0.02); border-color: rgba(255, 109, 0, 0.1); }
+
+        /* Block Styles */
+        .chain-block {
+            background: #FFFFFF;
+            border-left: 4px solid var(--theme-color);
+            padding: 15px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+        }
+
+        .chain-block:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .block-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .block-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tiny-tag {
+            font-size: 11px;
+            color: var(--text-grey);
+            background: #F5F7F9;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Arrows between columns */
+        .arrow-divider {
+            position: absolute;
+            top: 50%;
+            right: -22px;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            border-top: 2px solid #CFD8DC;
+            border-right: 2px solid #CFD8DC;
+            transform: rotate(45deg);
+            z-index: 2;
+        }
+        
+        /* Investment Focus Highlight */
+        .focus-badge {
+            font-size: 10px;
+            color: #FFF;
+            background: #FF5252;
+            padding: 1px 4px;
+            border-radius: 2px;
+            margin-left: 5px;
+            font-weight: 500;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="main-title">算力产业链全景图谱 <span style="font-size:14px; color:#999; font-weight:400; margin-left:10px;">Computing Power Industry Chain</span></div>
+            <div class="legend">
+                <div class="legend-item"><div class="dot" style="background:var(--upstream-blue)"></div>上游：算力基础设施</div>
+                <div class="legend-item"><div class="dot" style="background:var(--midstream-purple)"></div>中游：算力服务平台</div>
+                <div class="legend-item"><div class="dot" style="background:var(--downstream-orange)"></div>下游：行业应用赋能</div>
+            </div>
+        </div>
+
+        <!-- Chain Content -->
+        <div class="chain-container">
+            
+            <!-- Upstream -->
+            <div class="chain-column col-upstream">
+                <div class="col-header">上游 · 基础设施 <div class="arrow-divider"></div></div>
+                
+                <div class="chain-block">
+                    <div class="block-title">核心硬件 <span class="focus-badge">重点招商</span></div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">AI芯片(GPU/ASIC)</span>
+                        <span class="tiny-tag">服务器</span>
+                        <span class="tiny-tag">存储设备</span>
+                    </div>
+                </div>
+
+                <div class="chain-block">
+                    <div class="block-title">配套设施</div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">液冷系统</span>
+                        <span class="tiny-tag">精密空调</span>
+                        <span class="tiny-tag">微模块机房</span>
+                    </div>
+                </div>
+
+                <div class="chain-block">
+                    <div class="block-title">网络传输</div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">光模块(800G)</span>
+                        <span class="tiny-tag">交换机</span>
+                        <span class="tiny-tag">光纤光缆</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Midstream -->
+            <div class="chain-column col-midstream">
+                <div class="col-header">中游 · 算力服务 <div class="arrow-divider"></div></div>
+
+                <div class="chain-block">
+                    <div class="block-title">算力调度平台</div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">云管平台(CMP)</span>
+                        <span class="tiny-tag">算网大脑</span>
+                        <span class="tiny-tag">多云纳管</span>
+                    </div>
+                </div>
+
+                <div class="chain-block">
+                    <div class="block-title">基础软件 <span class="focus-badge">卡脖子</span></div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">操作系统</span>
+                        <span class="tiny-tag">数据库</span>
+                        <span class="tiny-tag">中间件</span>
+                    </div>
+                </div>
+
+                <div class="chain-block">
+                    <div class="block-title">大模型平台</div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">MaaS服务</span>
+                        <span class="tiny-tag">模型训练</span>
+                        <span class="tiny-tag">微调部署</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Downstream -->
+            <div class="chain-column col-downstream">
+                <div class="col-header">下游 · 场景应用</div>
+
+                <div class="chain-block">
+                    <div class="block-title">智慧城市</div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">城市大脑</span>
+                        <span class="tiny-tag">智慧交通</span>
+                        <span class="tiny-tag">安防监控</span>
+                    </div>
+                </div>
+
+                <div class="chain-block">
+                    <div class="block-title">工业互联 <span class="focus-badge">高价值</span></div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">智能质检</span>
+                        <span class="tiny-tag">预测性维护</span>
+                        <span class="tiny-tag">数字孪生</span>
+                    </div>
+                </div>
+
+                <div class="chain-block">
+                    <div class="block-title">前沿科技</div>
+                    <div class="block-tags">
+                        <span class="tiny-tag">AI+Science</span>
+                        <span class="tiny-tag">自动驾驶</span>
+                        <span class="tiny-tag">元宇宙</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

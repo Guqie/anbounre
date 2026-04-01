@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产业发展趋势</title>
+    <style>
+        :root {
+            --primary-blue: #2E86C1;
+            --accent-orange: #E67E22;
+            --bg-color: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --text-main: #2C3E50;
+            --text-sub: #566573;
+            --line-color: #D6DBDF;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 1480px;
+            height: 440px;
+            position: relative;
+            background: #FFFFFF;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column; /* Changed to column for header */
+        }
+
+        /* Top Header Section */
+        .header-row {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #F0F0F0;
+            padding-bottom: 10px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+        
+        .main-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 24px;
+            background: var(--primary-blue);
+            margin-right: 12px;
+            border-radius: 3px;
+        }
+
+        .header-metrics {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .metric-value {
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            line-height: 1;
+        }
+        
+        .metric-value small {
+            font-size: 14px;
+            color: var(--text-sub);
+            font-weight: 500;
+            margin-left: 2px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Connecting Line Background */
+        .process-line {
+            position: absolute;
+            top: 150px; /* Adjusted for header */
+            left: 100px;
+            right: 100px;
+            height: 4px;
+            background: #EAECEE;
+            z-index: 0;
+        }
+
+        /* Animated Progress Line */
+        .process-line-active {
+            position: absolute;
+            top: 150px; /* Adjusted for header */
+            left: 100px;
+            width: 80%; /* Partial fill */
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue) 60%, var(--accent-orange) 100%);
+            z-index: 0;
+            border-radius: 2px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            width: 100%;
+            flex-grow: 1; /* Fill remaining space */
+            position: relative;
+            z-index: 1;
+        }
+
+        .trend-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #EEEEEE;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .trend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(46, 134, 193, 0.15);
+            border-color: var(--primary-blue);
+        }
+
+        /* Step Indicator (Circle) */
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            background: #FFFFFF;
+            border: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin: 0 auto 15px auto;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 0 0 5px #FFFFFF; /* White halo to break line */
+        }
+
+        /* Last step orange style */
+        .trend-card.last .step-circle {
+            border-color: var(--accent-orange);
+            color: var(--accent-orange);
+        }
+        
+        .trend-card.last:hover {
+            box-shadow: 0 8px 25px rgba(230, 126, 34, 0.15);
+            border-color: var(--accent-orange);
+        }
+
+        /* Header Section */
+        .card-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .trend-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        /* Tags */
+        .industry-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            background: #F4F6F7;
+            color: var(--text-sub);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            border: 1px solid #E5E8E8;
+        }
+
+        /* Content Section */
+        .card-content {
+            color: var(--text-main);
+            line-height: 1.5;
+            font-size: 13px;
+            text-align: justify;
+            flex-grow: 1; /* Fill remaining space */
+            background: #FAFAFA;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .highlight-number {
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+        
+        .trend-card.last .highlight-number {
+            color: var(--accent-orange);
+        }
+
+        /* Connector Arrows between cards */
+        .connector-arrow {
+            position: absolute;
+            top: 80px; /* Center with circle */
+            right: -22px;
+            font-size: 24px;
+            color: #D6DBDF;
+            z-index: 0;
+        }
+        
+        .trend-card:last-child .connector-arrow {
+            display: none;
+        }
+
+        /* Abstract SVG Backgrounds - Small Icon in Top Right */
+        .bg-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            opacity: 0.1;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header-row">
+            <div class="main-title">产业发展趋势</div>
+            <div class="header-metrics">
+                <div class="metric-item">
+                    <span class="metric-value">30%<small>+</small></span>
+                    <span class="metric-label">年均复合增长</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">50%<small>↑</small></span>
+                    <span class="metric-label">智算占比预测</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value">PUE&lt;1.2</span>
+                    <span class="metric-label">绿色化指标</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connecting Lines -->
+        <div class="process-line"></div>
+        <div class="process-line-active"></div>
+
+        <div class="grid-container">
+            <!-- Card 1: Demand Side -->
+            <div class="trend-card">
+                <div class="step-circle">01</div>
+                <div class="connector-arrow">▶</div>
+                <div class="bg-icon" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000\' stroke-width=\'2\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E');"></div>
+                
+                <div class="card-header">
+                    <div class="trend-title">推理算力爆发</div>
+                    <div class="industry-tags">
+                        <span class="tag">推理芯片</span>
+                        <span class="tag">AI加速器</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    AI大模型走向应用，推理需求激增。2024年市场规模<span class="highlight-number">320亿元</span>，2027年破<span class="highlight-number">千亿</span>。国产芯片突破瓶颈，供应链逐步完善。
+                </div>
+            </div>
+
+            <!-- Card 2: Coordination -->
+            <div class="trend-card">
+                <div class="step-circle">02</div>
+                <div class="connector-arrow">▶</div>
+                <div class="bg-icon" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000\' stroke-width=\'2\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3Cpath d=\'M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z\'/%3E%3C/svg%3E');"></div>
+
+                <div class="card-header">
+                    <div class="trend-title">协调统筹强化</div>
+                    <div class="industry-tags">
+                        <span class="tag">算力调度</span>
+                        <span class="tag">高速网络</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    “东数西算”深入推进，跨区域高效调度是核心。从“任意算力”向“一体算力”演进，构建统一标准、灵活调度的<span class="highlight-number">算力底座</span>。
+                </div>
+            </div>
+
+            <!-- Card 3: Infrastructure -->
+            <div class="trend-card">
+                <div class="step-circle">03</div>
+                <div class="connector-arrow">▶</div>
+                <div class="bg-icon" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23000\' stroke-width=\'2\'%3E%3Cpath d=\'M12 2.69l5.74 5.74-5.74 5.74-5.74-5.74L12 2.69zM12 21.31l-5.74-5.74 5.74-5.74 5.74 5.74-5.74 5.74z\'/%3E%3C/svg%3E');"></div>
+
+                <div class="card-header">
+                    <div class="trend-title">液冷成为标配</div>
+                    <div class="industry-tags">
+                        <span class="tag">高密服务器</span>
+                        <span class="tag">液冷设备</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    双碳与高功耗压力下，PUE<span class="highlight-number">1.2</span>成硬指标。2025年液冷市场破<span class="highlight-number">1200亿</span>，渗透率超<span class="highlight-number">30%</span>，支撑高密度智算中心。
+                </div>
+            </div>
+
+            <!-- Card 4: Application -->
+            <div class="trend-card last">
+                <div class="step-circle">04</div>
+                <div class="bg-icon" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23E67E22\' stroke-width=\'2\'%3E%3Crect x=\'3\' y=\'3\' width=\'7\' height=\'7\'/%3E%3Crect x=\'14\' y=\'3\' width=\'7\' height=\'7\'/%3E%3Crect x=\'14\' y=\'14\' width=\'7\' height=\'7\'/%3E%3Crect x=\'3\' y=\'14\' width=\'7\' height=\'7\'/%3E%3C/svg%3E');"></div>
+
+                <div class="card-header">
+                    <div class="trend-title" style="color: var(--accent-orange);">场景深化融合</div>
+                    <div class="industry-tags">
+                        <span class="tag">行业大模型</span>
+                        <span class="tag">垂直应用</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    算力赋能实体经济，工业大模型深度融入生产。医疗、电力等垂直生态成熟，元宇宙、脑机接口成为<span class="highlight-number">新引擎</span>，实现商业闭环。
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

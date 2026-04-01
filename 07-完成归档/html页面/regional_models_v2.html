@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区域算力发展模式与招商建议</title>
+    <style>
+        :root {
+            --blue: #2962FF;      /* Pinghu: Tech Blue */
+            --purple: #6200EA;    /* Tongxiang: Deep Purple */
+            --teal: #00BFA5;      /* Datong: Energy Teal */
+            --gold: #FFAB00;      /* Suggestions: Strategic Gold */
+            --bg-color: #F0F2F5;
+            --card-bg: #FFFFFF;
+            --text-dark: #263238;
+            --text-grey: #546E7A;
+            --border-radius: 12px;
+        }
+        
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 1360px;
+            height: 630px;
+            background: #FFFFFF;
+            padding: 25px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 16px;
+        }
+
+        /* Bento Grid Layout */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bento-card {
+            background: #FAFAFA;
+            border-radius: var(--border-radius);
+            padding: 20px 25px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #E0E0E0;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            background: #FFFFFF;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
+            border-color: transparent;
+        }
+
+        /* Card Header with Colored Left Bar */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            bottom: 2px;
+            width: 4px;
+            background: var(--theme-color);
+            border-radius: 2px;
+        }
+
+        .region-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .model-tag {
+            font-size: 12px;
+            color: #FFFFFF;
+            background: var(--theme-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Strategy List */
+        .strategy-list {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .strategy-item {
+            display: flex;
+            gap: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text-grey);
+            background: #FFFFFF;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #EEEEEE;
+        }
+
+        .strategy-title {
+            color: var(--theme-color);
+            font-weight: 700;
+            white-space: nowrap;
+            min-width: 60px;
+        }
+
+        /* Data Footer */
+        .data-footer {
+            margin-top: 15px;
+            display: flex;
+            gap: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed #E0E0E0;
+        }
+
+        .data-point {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .data-value {
+            font-family: 'DIN Alternate', 'Arial', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--theme-color);
+            line-height: 1.1;
+        }
+
+        .data-label {
+            font-size: 10px;
+            color: #90A4AE;
+            text-transform: uppercase;
+        }
+
+        /* Specific Themes */
+        .card-pinghu { --theme-color: var(--blue); }
+        .card-tongxiang { --theme-color: var(--purple); }
+        .card-datong { --theme-color: var(--teal); }
+        
+        /* Investment Suggestions Card (Special Style) */
+        .card-suggestions {
+            --theme-color: var(--gold);
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFFFFF 100%);
+            border: 1px solid #FFE082;
+        }
+
+        .card-suggestions .region-name {
+            color: #F57F17;
+        }
+
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            height: 100%;
+        }
+
+        .suggestion-box {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #FFE0B2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .sug-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #FF6F00;
+        }
+
+        .sug-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #E65100;
+            margin-bottom: 4px;
+        }
+
+        .sug-desc {
+            font-size: 12px;
+            color: #BF360C;
+            line-height: 1.4;
+        }
+
+        /* Background Watermark */
+        .bg-watermark {
+            position: absolute;
+            right: -10px;
+            bottom: -20px;
+            font-size: 120px;
+            font-weight: 900;
+            color: var(--theme-color);
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bento-grid">
+            
+            <!-- 1. Pinghu Model -->
+            <div class="bento-card card-pinghu">
+                <div class="bg-watermark">01</div>
+                <div class="card-header">
+                    <div class="region-name">平湖市 <span class="model-tag">全链生态</span></div>
+                </div>
+                <div class="strategy-list">
+                    <div class="strategy-item">
+                        <span class="strategy-title">算力筑基</span>
+                        <span>依托润泽智算中心(4.9万P)，支撑阿里、智谱华章等头部模型研发。</span>
+                    </div>
+                    <div class="strategy-item">
+                        <span class="strategy-title">链式布局</span>
+                        <span>联动服务器、光通信、线缆智造，打造长三角特色硬件产业集群。</span>
+                    </div>
+                    <div class="strategy-item">
+                        <span class="strategy-title">生态赋能</span>
+                        <span>组建“1+8+N”科研平台，通过普惠补贴降低企业算力使用成本。</span>
+                    </div>
+                </div>
+                <div class="data-footer">
+                    <div class="data-point">
+                        <span class="data-value">4.9万P</span>
+                        <span class="data-label">算力规模 (FLOPS)</span>
+                    </div>
+                    <div class="data-point">
+                        <span class="data-value">1+8+N</span>
+                        <span class="data-label">产才科研体系</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Tongxiang Model -->
+            <div class="bento-card card-tongxiang">
+                <div class="bg-watermark">02</div>
+                <div class="card-header">
+                    <div class="region-name">桐乡市 <span class="model-tag">双核驱动</span></div>
+                </div>
+                <div class="strategy-list">
+                    <div class="strategy-item">
+                        <span class="strategy-title">双核支撑</span>
+                        <span>构建“乌镇之光”超算+联通智算双中心，夯实协同算力基石。</span>
+                    </div>
+                    <div class="strategy-item">
+                        <span class="strategy-title">精准招商</span>
+                        <span>放大乌镇峰会溢出效应，“会展+场景”模式吸引百度、宁畅入驻。</span>
+                    </div>
+                    <div class="strategy-item">
+                        <span class="strategy-title">应用转化</span>
+                        <span>聚焦“车路云一体化”及智能制造，推动算力从消耗转向产业增值。</span>
+                    </div>
+                </div>
+                <div class="data-footer">
+                    <div class="data-point">
+                        <span class="data-value">双核</span>
+                        <span class="data-label">超算+智算协同</span>
+                    </div>
+                    <div class="data-point">
+                        <span class="data-value">Top</span>
+                        <span class="data-label">车路云标杆</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Datong Model -->
+            <div class="bento-card card-datong">
+                <div class="bg-watermark">03</div>
+                <div class="card-header">
+                    <div class="region-name">大同市 <span class="model-tag">算电一体</span></div>
+                </div>
+                <div class="strategy-list">
+                    <div class="strategy-item">
+                        <span class="strategy-title">垂直生态</span>
+                        <span>贯通装备制造、网络传输及人才培养全链条，产业反哺本地社区。</span>
+                    </div>
+                    <div class="strategy-item">
+                        <span class="strategy-title">算电协同</span>
+                        <span>发挥“绿能心脏”优势，实现绿电与算力深度融合，转化为竞争力。</span>
+                    </div>
+                    <div class="strategy-item">
+                        <span class="strategy-title">需求驱动</span>
+                        <span>坚持市场化机制，实现90%以上高上架率，确保商业闭环与资产优质。</span>
+                    </div>
+                </div>
+                <div class="data-footer">
+                    <div class="data-point">
+                        <span class="data-value">90%+</span>
+                        <span class="data-label">机架上架率</span>
+                    </div>
+                    <div class="data-point">
+                        <span class="data-value">Green</span>
+                        <span class="data-label">绿电核心优势</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Investment Suggestions (New Module) -->
+            <div class="bento-card card-suggestions">
+                <div class="bg-watermark" style="font-size: 80px; top: 10px; right: 10px;">💡</div>
+                <div class="card-header">
+                    <div class="region-name">招商策略建议 <span class="model-tag" style="background:#F57F17">核心行动</span></div>
+                </div>
+                <div class="suggestion-grid">
+                    <div class="suggestion-box">
+                        <div class="sug-title">📍 因地制宜，错位发展</div>
+                        <div class="sug-desc">避免同质化竞争。能源富集区走“算电协同”（大同），产业发达区走“场景驱动”（桐乡）。</div>
+                    </div>
+                    <div class="suggestion-box">
+                        <div class="sug-title">🚀 场景换产业，市场换技术</div>
+                        <div class="sug-desc">开放智慧城市、自动驾驶等高价值场景，吸引算法与硬件企业落地（桐乡经验）。</div>
+                    </div>
+                    <div class="suggestion-box">
+                        <div class="sug-title">🔗 强链补链，软硬兼施</div>
+                        <div class="sug-desc">围绕核心智算中心，向上游延伸光模块/服务器制造，向下游拓展模型应用（平湖经验）。</div>
+                    </div>
+                    <div class="suggestion-box">
+                        <div class="sug-title">💰 降本增效，普惠赋能</div>
+                        <div class="sug-desc">通过算力券/补贴降低中小企业门槛，提升算力资产利用率，避免“建而不用”。</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

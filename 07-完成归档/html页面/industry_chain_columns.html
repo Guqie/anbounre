@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>重点招商企业全景图 (深蓝商务风)</title>
+    <style>
+        :root {
+            /* Color Palette Extraction from Image 1 (The Dark Blue Chain) */
+            --header-navy: #002060; /* The dark header bar color */
+            --arrow-blue: #2F5597; /* The chevron arrow blue */
+            --arrow-grey: #7F7F7F; /* The chevron arrow grey */
+            --box-blue: #1F4E78; /* The left side box blue */
+            --light-green: #E2F0D9; /* The bottom flow green */
+            --text-dark: #000000;
+            --bg-white: #FFFFFF;
+            --border-dashed: #BFBFBF;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: var(--bg-white);
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-container {
+            width: 1400px;
+            background: #fff;
+            padding: 0; /* Remove padding to let header stretch */
+            border: 1px solid #ccc;
+        }
+
+        /* Top Header Bar (Full Width Navy) */
+        .header-bar {
+            background-color: var(--header-navy);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+        }
+
+        .sub-header-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 60px;
+            margin-bottom: 20px;
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .long-arrow-line {
+            height: 2px;
+            background: var(--header-navy);
+            margin: 0 40px 40px 40px;
+            position: relative;
+        }
+        
+        .long-arrow-line::before, .long-arrow-line::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            background: var(--header-navy);
+            border-radius: 50%;
+        }
+        .long-arrow-line::before { left: 0; }
+        .long-arrow-line::after { right: 0; }
+
+        /* Layout */
+        .chart-layout { display: flex; gap: 40px; padding: 0 40px 40px 40px; }
+        
+        /* Left Spine - Simplified to text labels */
+        .flow-column {
+            width: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            border-right: 2px dashed #ccc;
+            margin-right: 20px;
+        }
+        
+        .stage-label {
+            writing-mode: vertical-rl;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--header-navy);
+            letter-spacing: 10px;
+            margin-bottom: 150px;
+        }
+
+        /* Right Content */
+        .content-column { flex-grow: 1; display: flex; flex-direction: column; gap: 40px; }
+
+        /* CATEGORY BOX STYLE */
+        /* Mimicking the "Chip/Server" blue boxes on the left of Image 1 */
+        .category-wrapper {
+            display: flex;
+            align-items: stretch;
+            gap: 20px;
+        }
+
+        /* The Main Category Label (Solid Blue Box) */
+        .category-label-box {
+            background-color: var(--box-blue);
+            color: white;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+        }
+
+        /* The Content Area */
+        .category-content {
+            flex-grow: 1;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        /* SUB-GROUP (Arrow Shape or Simple Box) */
+        /* Mimicking the Chevron Arrows: Dark Blue -> Grey */
+        .sub-group-arrow {
+            position: relative;
+            background: var(--arrow-blue);
+            color: white;
+            padding: 15px 10px 15px 20px; /* Left padding for arrow tail */
+            margin-right: 15px; /* Space for arrow head */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 120px;
+            clip-path: polygon(0% 0%, 85% 0%, 100% 50%, 85% 100%, 0% 100%);
+            /* Fallback for clip-path if needed, but modern browsers support it */
+            width: auto;
+            flex-grow: 0;
+        }
+        
+        /* Alternate color for downstream/grey arrows */
+        .sub-group-arrow.grey {
+            background: var(--arrow-grey);
+        }
+
+        .sub-title-vertical {
+            writing-mode: vertical-rl;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 15px;
+            border-right: 1px solid rgba(255,255,255,0.3);
+            padding-right: 10px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .company-list-vertical {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+        }
+
+        .company-text {
+            writing-mode: vertical-rl;
+            font-size: 13px;
+            color: white;
+            letter-spacing: 1px;
+            border-left: 1px dotted rgba(255,255,255,0.5);
+            padding-left: 4px;
+        }
+        
+        .company-text:first-child { border-left: none; }
+        
+        .star { color: #FFD700; font-size: 10px; vertical-align: super; }
+
+        /* Bottom Green Flow (Optional decoration) */
+        .bottom-flow {
+            margin-top: 10px;
+            background: var(--light-green);
+            color: #000;
+            padding: 10px 20px;
+            display: inline-block;
+            font-weight: bold;
+            clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <!-- Header Bar -->
+    <div class="header-bar">算力产业链全景图</div>
+    
+    <!-- Sub Header -->
+    <div class="sub-header-row">
+        <span>上游：算力基础软硬件</span>
+        <span>中游：算力网络与平台</span>
+        <span>下游：算力使用者</span>
+    </div>
+    
+    <!-- Line -->
+    <div class="long-arrow-line"></div>
+
+    <div class="chart-layout">
+        <!-- Left Spine -->
+        <div class="flow-column">
+            <div class="stage-label">上游</div>
+            <div class="stage-label">中游</div>
+            <div class="stage-label">下游</div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-column">
+            
+            <!-- UPSTREAM -->
+            <div class="category-wrapper">
+                <div class="category-label-box">芯片设计与制造</div>
+                <div class="category-content">
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">通用/专用芯片</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">无锡奥特维科技股份有限公司</div><div class="company-text">无锡华润上华科技有限公司</div><div class="company-text">海光信息技术股份有限公司</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="category-wrapper">
+                <div class="category-label-box">硬件设备</div>
+                <div class="category-content">
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">服务器与计算设备</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">无锡宏创盛安科技有限公司</div><div class="company-text">云尖信息技术有限公司</div><div class="company-text">烽火超微信息科技有限公司</div><div class="company-text">超聚变数字技术股份有限公司</div><div class="company-text">威腾电气集团股份有限公司</div><div class="company-text">浙江德塔森特数据技术有限公司<span class='star'>★</span></div><div class="company-text">苏州超集信息科技有限公司<span class='star'>★</span></div><div class="company-text">河南昆仑技术有限公司<span class='star'>★</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">网络与通信设备</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">锐捷网络</div><div class="company-text">易飞扬通信技术有限公司</div><div class="company-text">深圳易天光通信有限公司</div><div class="company-text">深圳友联科技有限公司</div><div class="company-text">深圳明阳电路科技股份有限公司<span class='star'>★</span></div><div class="company-text">深圳市飞速创新技术股份有限公司（<span class='star'>★</span></div><div class="company-text">广州广电五舟科技股份有限公司</div><div class="company-text">赛特斯信息科技股份有限公司<span class='star'>★</span></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="category-wrapper">
+                <div class="category-label-box">基础设施</div>
+                <div class="category-content">
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">供配电系统</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">杭州中恒电气股份有限公司</div><div class="company-text">深圳科士达科技股份有限公司</div><div class="company-text">罗格朗</div><div class="company-text">山特电子（深圳）有限公司</div><div class="company-text">深圳麦格米特电气股份有限公司</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">制冷与节能系统</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">兰洋（宁波）科技有限公司</div><div class="company-text">深圳市英维克科技股份有限公司</div><div class="company-text">南京普天天纪楼宇智能有限公司</div><div class="company-text">南京佳力图机房环境技术股份有限公司</div><div class="company-text">上海熙德热传科技有限公司</div><div class="company-text">依米康科技集团股份有限公司</div>
+                        </div>
+                    </div>
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">监控与物理设施</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">深圳市共济科技股份有限公司</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- MIDSTREAM -->
+            <div class="category-wrapper">
+                <div class="category-label-box">中游服务</div>
+                <div class="category-content">
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">算力租赁与云服务</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">江苏博云科技股份有限公司<span class='star'>★</span></div><div class="company-text">浙大网新科技股份有限公司</div><div class="company-text">是石科技<span class='star'>★</span></div><div class="company-text">广州尚航信息科技股份有限公司<span class='star'>★</span></div>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    <div class="sub-group-arrow">
+                        <div class="sub-title-vertical">平台开发与运营</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">杭州骋风而来数字科技公司</div><div class="company-text">杭州谐云科技有限公司</div><div class="company-text">南京中科逆熵科技有限公司</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <!-- DOWNSTREAM -->
+            <div class="category-wrapper">
+                <div class="category-label-box">下游应用</div>
+                <div class="category-content">
+                    
+                    <div class="sub-group-arrow grey"> <!-- Grey for downstream -->
+                        <div class="sub-title-vertical">数据采集与标注</div>
+                        <div class="company-list-vertical">
+                            <div class="company-text">杭州景联文科技有限公司</div><div class="company-text">标贝（青岛）科技有限公司</div><div class="company-text">澳鹏科技（无锡）有限公司</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <!-- Decorative Bottom Flow -->
+    <div style="margin-left: 100px; margin-top: 20px;">
+        <div class="bottom-flow">算力生产</div>
+        <div class="bottom-flow" style="margin-left: 50px;">算力调度</div>
+        <div class="bottom-flow" style="margin-left: 50px;">算力交易</div>
+        <div class="bottom-flow" style="margin-left: 50px;">算力使用</div>
+    </div>
+</div>
+
+</body>
+</html>

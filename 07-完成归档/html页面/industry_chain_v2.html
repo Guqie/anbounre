@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力产业链全景图</title>
+    <style>
+        :root {
+            --primary-navy: #0F172A;
+            --secondary-slate: #475569;
+            --accent-orange: #F97316;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+            --dashed-border: #94A3B8;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align top for scrolling if needed */
+            min-height: 100vh;
+            color: var(--text-main);
+        }
+
+        .container {
+            width: 1480px;
+            /* Auto height */
+            padding: 50px 60px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Header */
+        .header-section {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Central Spine Line */
+        .spine {
+            position: absolute;
+            left: 50%;
+            top: 160px; /* Start below header */
+            bottom: 60px; /* End before bottom */
+            width: 4px;
+            background: var(--primary-navy);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .spine::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: -6px;
+            width: 0; 
+            height: 0; 
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid var(--primary-navy);
+        }
+
+        /* Stage Node (Upstream/Midstream/Downstream) */
+        .stage-node {
+            width: 160px;
+            height: 60px;
+            background: var(--primary-navy);
+            color: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            border-radius: 8px;
+            margin: 0 auto 40px auto; /* Centered */
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+        }
+
+        /* Row Layouts */
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .row-center {
+            justify-content: center;
+            gap: 40px;
+        }
+
+        /* Sector Box (Dashed Container) */
+        .sector-box {
+            background: #FFFFFF;
+            border: 2px dashed var(--dashed-border);
+            border-radius: 12px;
+            padding: 20px;
+            width: 30%; /* Flexible width */
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .sector-box:hover {
+            border-color: var(--accent-orange);
+            border-style: solid;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transform: translateY(-2px);
+        }
+
+        .sector-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+            text-align: center;
+            background: #F1F5F9;
+            padding: 8px;
+            border-radius: 6px;
+        }
+
+        /* Company List */
+        .company-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .company-tag {
+            font-size: 12px;
+            color: var(--secondary-slate);
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* Specific Width Adjustments based on image content density */
+        .w-large { width: 45%; }
+        .w-medium { width: 30%; }
+        .w-small { width: 22%; }
+
+        /* Connector Lines (Horizontal from Spine) */
+        .connector-h {
+            position: absolute;
+            top: 50%;
+            height: 2px;
+            background: var(--dashed-border);
+            z-index: 0;
+        }
+        
+        /* Left/Right Connectors */
+        .conn-left {
+            right: 50%;
+            width: 15%; /* Reach out to side boxes */
+        }
+        
+        .conn-right {
+            left: 50%;
+            width: 15%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="main-title">算力产业链全景图</div>
+            <div class="subtitle">Computing Power Industry Chain Map</div>
+        </div>
+
+        <!-- Central Spine -->
+        <div class="spine"></div>
+
+        <!-- UPSTREAM SECTION -->
+        <div class="stage-node">上游</div>
+
+        <!-- Row 1 -->
+        <div class="row">
+            <!-- 1. Chips -->
+            <div class="sector-box w-medium">
+                <div class="sector-title">芯片与模组</div>
+                <div class="company-list">
+                    <span class="company-tag">无锡奥特维科技</span>
+                    <span class="company-tag">无锡华润上华科技</span>
+                    <span class="company-tag">海光信息技术</span>
+                </div>
+            </div>
+
+            <!-- 2. Servers -->
+            <div class="sector-box w-medium">
+                <div class="sector-title">计算设备</div>
+                <div class="company-list">
+                    <span class="company-tag">无锡宏创盛安科技</span>
+                    <span class="company-tag">云尖信息技术</span>
+                    <span class="company-tag">烽火超微信息科技</span>
+                    <span class="company-tag">超聚变数字技术</span>
+                    <span class="company-tag">河南昆仑技术</span>
+                    <span class="company-tag">广州广电五舟科技</span>
+                </div>
+            </div>
+
+            <!-- 3. Network -->
+            <div class="sector-box w-medium">
+                <div class="sector-title">网络通信</div>
+                <div class="company-list">
+                    <span class="company-tag">锐捷网络</span>
+                    <span class="company-tag">深圳易天光通信</span>
+                    <span class="company-tag">深圳友联科技</span>
+                    <span class="company-tag">深圳市飞速创新技术</span>
+                    <span class="company-tag">易飞扬通信技术</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row">
+            <!-- 4. Infrastructure -->
+            <div class="sector-box w-medium">
+                <div class="sector-title">基础设施配套</div>
+                <div class="company-list">
+                    <span class="company-tag">杭州中恒电气</span>
+                    <span class="company-tag">深圳科士达科技</span>
+                    <span class="company-tag">罗格朗</span>
+                    <span class="company-tag">山特电子（深圳）</span>
+                    <span class="company-tag">深圳麦格米特电气</span>
+                    <span class="company-tag">威腾电气集团</span>
+                </div>
+            </div>
+
+            <!-- 5. Cooling -->
+            <div class="sector-box w-medium">
+                <div class="sector-title">绿色节能系统</div>
+                <div class="company-list">
+                    <span class="company-tag">兰洋（宁波）科技</span>
+                    <span class="company-tag">深圳市英维克科技</span>
+                    <span class="company-tag">南京佳力图机房环境</span>
+                    <span class="company-tag">上海熙德热传科技</span>
+                    <span class="company-tag">依米康科技集团</span>
+                </div>
+            </div>
+
+            <!-- 6. Components -->
+            <div class="sector-box w-medium">
+                <div class="sector-title">关键元器件与监控</div>
+                <div class="company-list">
+                    <span class="company-tag">深圳明阳电路科技</span>
+                    <span class="company-tag">深圳市共济科技</span>
+                    <span class="company-tag">南京普天天纪楼宇智能</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MIDSTREAM SECTION -->
+        <div class="stage-node">中游</div>
+
+        <div class="row row-center">
+            <!-- Computing Services -->
+            <div class="sector-box w-large">
+                <div class="sector-title">算力服务提供商</div>
+                <div class="company-list">
+                    <span class="company-tag">浙江德塔森特数据技术</span>
+                    <span class="company-tag">苏州超集信息科技</span>
+                    <span class="company-tag">浙大网新科技</span>
+                    <span class="company-tag">是石科技</span>
+                    <span class="company-tag">广州尚航信息科技</span>
+                </div>
+            </div>
+
+            <!-- Platform & Ops -->
+            <div class="sector-box w-large">
+                <div class="sector-title">算力平台与运营</div>
+                <div class="company-list">
+                    <span class="company-tag">赛特斯信息科技</span>
+                    <span class="company-tag">江苏博云科技</span>
+                    <span class="company-tag">杭州骋风而来数字科技</span>
+                    <span class="company-tag">杭州谐云科技</span>
+                    <span class="company-tag">南京中科逆熵科技</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOWNSTREAM SECTION -->
+        <div class="stage-node">下游</div>
+
+        <div class="row row-center">
+            <!-- Data Services -->
+            <div class="sector-box w-large">
+                <div class="sector-title">数据服务</div>
+                <div class="company-list">
+                    <span class="company-tag">杭州景联文科技</span>
+                    <span class="company-tag">标贝（青岛）科技</span>
+                    <span class="company-tag">澳鹏科技（无锡）</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

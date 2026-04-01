@@ -1,0 +1,29 @@
+# Obsidian 缓存与本地配置
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/cache
+.obsidian/plugins/*/data.json
+.trash/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+~$*
+
+# 编辑器与本地环境
+.vscode/
+.idea/
+
+# 不属于知识库的文件
+*.py
+*.pyc
+__pycache__/
+node_modules/
+*.db
+
+# 日志与临时输出
+logs/
+*.log

@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力产业链全景图 (智库专业版)</title>
+    <style>
+        :root {
+            --primary-navy: #1F4E78; /* Classic Corporate Blue */
+            --accent-blue: #2F5597;  /* Medium Blue */
+            --accent-gray: #7F7F7F;  /* Dark Gray for text/borders */
+            --accent-green: #548235; /* Strong Green for text/borders */
+            --bg-light-green: #E2F0D9; /* Light Green Background */
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-light: #64748B;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .main-container {
+            width: 1200px;
+            background: #fff;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 3px solid var(--primary-navy);
+            padding-bottom: 20px;
+            margin-bottom: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .title-block h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0;
+            color: var(--primary-navy);
+            letter-spacing: -0.5px;
+        }
+
+        .title-block p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin: 5px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .legend {
+            font-size: 12px;
+            color: var(--text-light);
+            display: flex;
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-blue { background: var(--accent-blue); }
+        .dot-gray { background: var(--accent-gray); }
+        .dot-green { background: var(--accent-green); }
+
+        /* Main Layout */
+        .chart-layout {
+            display: flex;
+            gap: 60px;
+        }
+
+        /* Left: Process Flow (Spine) */
+        .flow-column {
+            width: 120px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .stage-badge {
+            writing-mode: vertical-rl;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            padding: 20px 12px;
+            border-radius: 4px;
+            letter-spacing: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        .bg-upstream { background: var(--accent-blue); }
+        .bg-midstream { background: var(--accent-gray); }
+        .bg-downstream { background: var(--accent-green); }
+
+        .flow-line {
+            width: 2px;
+            background: #CBD5E1;
+            flex-grow: 1;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .flow-line::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: -4px;
+            width: 0; 
+            height: 0; 
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #CBD5E1;
+        }
+
+        /* Right: Content Cards */
+        .content-column {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .section-group {
+            position: relative;
+            padding-left: 20px;
+            border-left: 4px solid transparent; /* Highlight marker */
+        }
+        
+        .section-group.up { border-left-color: var(--accent-blue); }
+        .section-group.mid { border-left-color: var(--accent-gray); }
+        .section-group.down { border-left-color: var(--accent-green); }
+
+        .sub-category-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+            padding: 0; /* Header/Body split */
+            border-radius: 0; /* Sharp professional look */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            background: #F1F5F9;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Specific header colors for sections */
+        .section-group.up .card-header { background: #F0F4F8; color: var(--accent-blue); }
+        .section-group.mid .card-header { background: #F2F2F2; color: var(--accent-gray); }
+        .section-group.down .card-header { background: var(--bg-light-green); color: var(--accent-green); }
+
+        .card-tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            background: #fff;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            color: var(--text-light);
+        }
+
+        .card-body {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .company-pill {
+            font-size: 13px;
+            color: var(--text-main);
+            padding: 6px 12px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+
+        .company-pill:hover {
+            border-color: var(--primary-navy);
+            color: var(--primary-navy);
+            background: #fff;
+        }
+        
+        .cross-star {
+            color: #F59E0B;
+            font-size: 10px;
+            vertical-align: super;
+            margin-left: 2px;
+        }
+
+        /* Connectors */
+        .connector-dot {
+            position: absolute;
+            left: -26px; /* Align with border */
+            top: 20px;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border: 2px solid #CBD5E1;
+            border-radius: 50%;
+        }
+
+        /* Annotation/Note */
+        .note {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #E2E8F0;
+            font-size: 12px;
+            color: var(--text-light);
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="title-block">
+                <h1>重点招商企业产业链全景图</h1>
+                <p>Key Investment Promotion Enterprise Panorama 2025</p>
+            </div>
+            <div class="legend">
+                <div class="legend-item"><div class="dot dot-blue"></div>上游产业</div>
+                <div class="legend-item"><div class="dot dot-gray"></div>中游产业</div>
+                <div class="legend-item"><div class="dot dot-green"></div>下游产业</div>
+                <div class="legend-item">★ 跨界/综合性企业</div>
+            </div>
+        </div>
+
+        <div class="chart-layout">
+            <!-- Left Flow -->
+            <div class="flow-column">
+                <div class="stage-badge bg-upstream">上游产业</div>
+                <div class="flow-line" style="height: 500px;"></div>
+                <div class="stage-badge bg-midstream">中游产业</div>
+                <div class="flow-line" style="height: 300px;"></div>
+                <div class="stage-badge bg-downstream">下游产业</div>
+            </div>
+
+            <!-- Right Content -->
+            <div class="content-column">
+                
+                <!-- UPSTREAM SECTION -->
+                <div class="section-group up">
+                    <div class="connector-dot"></div>
+                    
+                    <!-- Chips -->
+                    <div class="sub-category-card">
+                        <div class="card-header">
+                            <span>01. 芯片设计与制造 (Chips & Semi)</span>
+                            <span class="card-tag">3 家</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="company-pill">无锡奥特维科技股份有限公司</div><div class="company-pill">无锡华润上华科技有限公司</div><div class="company-pill">海光信息技术股份有限公司</div>
+                        </div>
+                    </div>
+
+                    <!-- Hardware -->
+                    <div class="sub-category-card">
+                        <div class="card-header">
+                            <span>02. 核心硬件设备 (Servers & Network)</span>
+                            <span class="card-tag">14 家</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="company-pill">无锡宏创盛安科技有限公司</div><div class="company-pill">云尖信息技术有限公司</div><div class="company-pill">烽火超微信息科技有限公司</div><div class="company-pill">锐捷网络</div><div class="company-pill">超聚变数字技术股份有限公司</div><div class="company-pill">深圳易天光通信有限公司</div><div class="company-pill">深圳友联科技有限公司</div><div class="company-pill">深圳明阳电路科技股份有限公司<span class='cross-star'>★</span></div><div class="company-pill">深圳市飞速创新技术股份有限公司（<span class='cross-star'>★</span></div><div class="company-pill">广州广电五舟科技股份有限公司</div><div class="company-pill">浙江德塔森特数据技术有限公司<span class='cross-star'>★</span></div><div class="company-pill">苏州超集信息科技有限公司<span class='cross-star'>★</span></div><div class="company-pill">赛特斯信息科技股份有限公司<span class='cross-star'>★</span></div><div class="company-pill">河南昆仑技术有限公司<span class='cross-star'>★</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Infra -->
+                    <div class="sub-category-card">
+                        <div class="card-header">
+                            <span>03. 算力中心基础设施 (Infrastructure)</span>
+                            <span class="card-tag">14 家</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="company-pill">杭州中恒电气股份有限公司</div><div class="company-pill">兰洋（宁波）科技有限公司</div><div class="company-pill">深圳科士达科技股份有限公司</div><div class="company-pill">罗格朗</div><div class="company-pill">深圳市共济科技股份有限公司</div><div class="company-pill">易飞扬通信技术有限公司</div><div class="company-pill">深圳市英维克科技股份有限公司</div><div class="company-pill">山特电子（深圳）有限公司</div><div class="company-pill">南京普天天纪楼宇智能有限公司</div><div class="company-pill">南京佳力图机房环境技术股份有限公司</div><div class="company-pill">上海熙德热传科技有限公司</div><div class="company-pill">依米康科技集团股份有限公司</div><div class="company-pill">深圳麦格米特电气股份有限公司</div><div class="company-pill">威腾电气集团股份有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MIDSTREAM SECTION -->
+                <div class="section-group mid" style="margin-top: 40px;">
+                    <div class="connector-dot"></div>
+                    
+                    <!-- Service -->
+                    <div class="sub-category-card">
+                        <div class="card-header">
+                            <span>04. 算力服务提供商 (Computing Service)</span>
+                            <span class="card-tag">1 家</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="company-pill">浙大网新科技股份有限公司</div>
+                        </div>
+                    </div>
+
+                    <!-- Platform -->
+                    <div class="sub-category-card">
+                        <div class="card-header">
+                            <span>05. 算力平台与软件 (Platform & Software)</span>
+                            <span class="card-tag">6 家</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="company-pill">江苏博云科技股份有限公司<span class='cross-star'>★</span></div><div class="company-pill">杭州骋风而来数字科技公司</div><div class="company-pill">是石科技<span class='cross-star'>★</span></div><div class="company-pill">杭州谐云科技有限公司</div><div class="company-pill">广州尚航信息科技股份有限公司<span class='cross-star'>★</span></div><div class="company-pill">南京中科逆熵科技有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DOWNSTREAM SECTION -->
+                <div class="section-group down" style="margin-top: 40px;">
+                    <div class="connector-dot"></div>
+                    
+                    <!-- Data -->
+                    <div class="sub-category-card">
+                        <div class="card-header">
+                            <span>06. 数据服务与应用 (Data & AI App)</span>
+                            <span class="card-tag">3 家</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="company-pill">杭州景联文科技有限公司</div><div class="company-pill">标贝（青岛）科技有限公司</div><div class="company-pill">澳鹏科技（无锡）有限公司</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="note">
+            Data Source: Internal Investment Database 2025 | Generated by Trae AI Analytics
+        </div>
+    </div>
+
+</body>
+</html>

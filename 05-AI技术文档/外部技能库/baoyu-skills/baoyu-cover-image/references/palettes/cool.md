@@ -1,0 +1,32 @@
+---
+tags: ['AI', '技术文档']
+date: 2026-03-07
+status: 待整理
+---
+
+# cool
+
+Technical, professional, precise
+
+## Color Palette
+
+| Role | Color | Hex |
+|------|-------|-----|
+| Primary 1 | Engineering Blue | #2563EB |
+| Primary 2 | Navy Blue | #1E3A5F |
+| Primary 3 | Cyan | #06B6D4 |
+| Background | Light Gray | #F8F9FA |
+| Background Alt | Blueprint Off-White | #FAF8F5 |
+| Accent 1 | Amber | #F59E0B |
+| Accent 2 | Light Blue | #BFDBFE |
+
+## Decorative Hints
+
+- Grid lines and alignment guides
+- Dimension indicators and measurements
+- Technical schematics and diagrams
+- Geometric precision elements
+
+## Best For
+
+Architecture, system design, API, technical documentation, engineering, data analysis

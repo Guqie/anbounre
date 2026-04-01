@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Computing Value Chain Export</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; background: #f0f2f5; }
+        h1 { color: #1F4E78; }
+        #container { background: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        button { padding: 10px 20px; background: #1F4E78; color: white; border: none; cursor: pointer; font-size: 16px; border-radius: 4px; }
+        button:hover { background: #2F5597; }
+    </style>
+</head>
+<body>
+    <h1>算力产业链全景图 - PNG 导出预览</h1>
+    <div id="container">
+        <!-- SVG Content will be injected here by the script reading the file, but for now we embed it directly or link it -->
+        <img id="svg-image" src="computing_value_chain.svg" width="1200" height="500" />
+    </div>
+    <button onclick="downloadPNG()">📥 下载 PNG 图片 (High Res)</button>
+    <canvas id="canvas" width="2400" height="1000" style="display:none;"></canvas>
+
+    <script>
+        function downloadPNG() {
+            const img = document.getElementById('svg-image');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // High DPI scaling
+            ctx.scale(2, 2);
+            
+            const svgData = new XMLSerializer().serializeToString(img); // This might not work on img tag, need direct SVG or fetch
+            
+            // Better approach: Draw Image object to canvas
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, 1200, 500);
+            
+            const link = document.createElement('a');
+            link.download = 'computing_value_chain.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Auto-trigger load to ensure image is ready
+        window.onload = function() {
+            console.log("Ready to export");
+        };
+    </script>
+</body>
+</html>
+    

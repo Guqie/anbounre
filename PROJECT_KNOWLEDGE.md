@@ -1,0 +1,149 @@
+# 无敌战警1.0 项目技术与工程沉淀手册
+
+> **版本**：1.0  
+> **生成日期**：2026-02-09  
+> **贡献者**：傲娇大小姐哈雷酱 (AI Assistant) & 顾姥爷 (Project Lead)
+
+---
+
+## 1. 可视化工程架构 (Visualization Architecture)
+
+本项目采用了一种 **"Code-as-Design" (代码即设计)** 的混合架构，突破了传统 BI 工具的限制，实现了智库级的定制化输出。
+
+### 1.1 双模渲染策略
+我们根据图表的特性，选择了两种不同的渲染技术栈：
+
+*   **HTML/CSS + DOM 渲染**：
+    *   **适用场景**：复杂的网格布局（如 Bento Grid）、卡片式展示（如应用场景）、需要大量文字排版的图表（如纵向产业链）。
+    *   **优势**：利用 Flexbox/Grid 布局实现完美的对齐；CSS 样式易于维护和复用；支持复杂的文字换行和层级控制。
+    *   **案例**：`industry_trends.html`, `regional_models_v2.html`
+
+*   **SVG (Scalable Vector Graphics) 编程绘图**：
+    *   **适用场景**：精确的几何图形、流程图、连接线复杂的拓扑图（如横向产业链）。
+    *   **优势**：矢量无损；坐标控制精确到像素；适合绘制非标准形状（如箭头、流程块）。
+    *   **案例**：`generate_value_chain.py` -> `computing_value_chain.svg`
+
+### 1.2 数据驱动工作流 (Data-Driven Workflow)
+我们摒弃了手动绘图（如 PPT/Visio）的低效模式，建立了自动化的数据管道：
+1.  **数据源**：Excel (`重点招商引资企业.xlsx`)。
+2.  **处理层 (Python/Pandas)**：清洗数据、分类映射（如将"硬件设备"细分为"服务器"和"网络"）、处理脏数据（如去除空格、统一术语）。
+3.  **表现层 (Jinja2/String Formatting)**：将清洗后的数据动态注入 HTML/SVG 模板。
+4.  **优势**：当源数据更新时，只需重新运行脚本即可生成最新图表，无需手动调整 UI。
+
+---
+
+## 2. 视觉宪法 (The Visual Constitution)
+
+为了确保所有输出产物具有统一的"家族感"，我们确立了严格的 **语义化配色系统 (Semantic Color System)**。
+
+### 2.1 核心色板 (Color Palette)
+| 语义定义 (Semantics) | 颜色名称 | HEX 色值 | 应用场景 |
+| :--- | :--- | :--- | :--- |
+| **Core / Infrastructure** | **海军蓝 (Navy)** | `#1F4E78` | 标题栏、核心平台、一级标题、基础设施 |
+| **Upstream / Hard Tech** | **中蓝 (Medium Blue)** | `#2F5597` | 上游芯片、服务器、交换机等硬件组件 |
+| **Midstream / Service** | **深灰 (Dark Gray)** | `#7F7F7F` | 中游服务、平台运营、连接层、辅助信息 |
+| **Downstream / Value** | **深绿 (Strong Green)** | `#548235` | 下游应用、交易市场、价值变现流程 |
+| **Background / Flow** | **浅绿 (Light Green)** | `#E2F0D9` | 底部流程背景块、区域划分底色 |
+
+### 2.2 设计原则
+1.  **一致性 (Consistency)**：不同图表中的相同概念（如"上游"）必须使用相同的颜色。
+2.  **层级感 (Hierarchy)**：通过颜色的深浅（深蓝 vs 中蓝）和冷暖（蓝 vs 绿）来区分信息的权重和类别。
+3.  **可读性 (Readability)**：深色背景配白色文字，浅色背景配黑色文字，严禁使用低对比度组合（如浅绿底配白字）。
+
+---
+
+## 3. 高保真渲染管线 (High-Fidelity Rendering Pipeline)
+
+在 Windows 环境下实现高质量的图片输出是一个经典的工程难题。我们摸索出了一套 **"浏览器即服务" (Browser-as-a-Service)** 的解决方案。
+
+### 3.1 痛点分析
+*   **Python 绘图库的局限**：`cairosvg` 等库在 Windows 上依赖复杂的 GTK/DLL 环境，极易报错（"DLL Load Failed"）。
+*   **截图工具的低质**：手动截图无法保证分辨率，且难以自动化。
+
+### 3.2 解决方案：Selenium + Headless Edge
+利用 Edge/Chrome 浏览器强大的内核作为渲染引擎：
+1.  **输入**：生成的 HTML 或 SVG 文件。
+2.  **驱动**：使用 `Selenium` 启动无头模式（Headless）的浏览器。
+3.  **配置**：
+    *   `--window-size=2000,2000`：设置超大视口，确保图表完整渲染。
+    *   `--headless`：后台静默运行。
+4.  **输出**：调用 `element.screenshot()` 直接捕获渲染后的像素流。
+5.  **成果**：获得了 2x/4x 超高清 PNG，且支持所有 CSS3 高级特性（阴影、圆角、渐变）。
+
+---
+
+## 4. 关键代码片段备忘 (Code Snippets)
+
+### 4.1 自动化截图脚本 (Python)
+```python
+from selenium import webdriver
+from selenium.webdriver.edge.options import Options
+
+def export_html_to_png(html_path, png_path):
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--window-size=2400,1600") # High-Res Canvas
+    driver = webdriver.Edge(options=options)
+    driver.get(f"file:///{html_path}")
+    driver.find_element(By.TAG_NAME, "body").screenshot(png_path)
+    driver.quit()
+```
+
+### 4.2 SVG 绘制箭头函数 (Python/svgwrite)
+```python
+def draw_chevron(dwg, x, y, w, h, text, color):
+    indent = 20
+    # 箭头多边形坐标计算
+    points = [
+        (x, y), (x + w - indent, y), (x + w, y + h/2),
+        (x + w - indent, y + h), (x, y + h), (x + indent, y + h/2)
+    ]
+    dwg.add(dwg.polygon(points=points, fill=color, stroke="#fff", stroke_width=2))
+```
+
+---
+
+## 5. 项目结语 (Conclusion)
+
+本项目不仅仅是制作了几张图表，而是建立了一套 **"从数据到高颜值可视化"** 的完整工程体系。
+这套体系具有极高的复用价值：未来无论是做"新能源产业链"还是"生物医药全景图"，只需替换 Excel 数据源和配色变量，即可在分钟级生成同等质量的智库报告。
+
+**核心资产**：
+1.  语义化配色表 (The Visual Constitution)
+2.  SVG/HTML 模板库 (The Template Library)
+3.  自动化渲染脚本 (The Rendering Bot)
+
+---
+
+## 6. 图表资产总览 (Chart Asset Inventory)
+
+截止 2026-02-09，本项目共生成了 5 类核心图表。以下是详细的分类统计与技术实现分布。
+
+### 6.1 图表分类统计表
+
+| 序号 | 图表类别 | 图表名称 | 文件名 | 核心技术 | 视觉风格 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 01 | **宏观趋势** | 产业发展趋势图 | `industry_trends.html` | HTML/CSS (Flexbox) | Timeline Process (时间轴) |
+| 02 | **区域模式** | 区域算力模式解析 | `regional_models_v2.html` | HTML/CSS (Grid) | Bento Grid (便当盒布局) |
+| 03 | **应用场景** | 算力应用场景卡片 | `computing_scenarios.html` | HTML/CSS (Card) | Insight Cards (智库卡片) |
+| 04 | **产业链(纵)** | 纵向产业链全景图 | `industry_chain_vertical_pro.html` | HTML/CSS (Flow) | Vertical Flow (纵向流程) |
+| 05 | **产业链(横)** | 横向产业链全景图 | `computing_value_chain.svg` | Python (svgwrite) | Value Stream (价值流) |
+
+### 6.2 技术栈分布分析 (Method Distribution)
+
+在本项目中，我们采用了 **"HTML 主导，SVG 为辅"** 的混合技术路线：
+
+*   **HTML/CSS (80%)**: 
+    *   主导了绝大多数图表的制作（4/5）。
+    *   **原因**：对于包含大量文本、需要复杂排版（如多级标题、标签、数据块）的图表，HTML 的文档流模型具有天然优势。配合 CSS Grid/Flexbox，可以轻松实现“便当盒”、“卡片”等现代 UI 布局。
+    *   **优势**：易于修改文字内容，支持响应式布局，渲染效果极其锐利。
+
+*   **SVG (Python Generated) (20%)**:
+    *   主要用于绘制具有严格拓扑关系和非标准几何形状的图表（1/5）。
+    *   **原因**：横向产业链图包含复杂的箭头连接、自定义的多边形（Chevron Arrows）和精确的坐标定位，这在 HTML 中实现起来较为繁琐。SVG 提供了像素级的绘图控制力。
+    *   **优势**：矢量无损，适合绘制逻辑流程图和拓扑结构。
+
+这种 **"因地制宜"** 的技术选型策略，既保证了开发效率，又确保了最终产出的视觉质量。
+
+---
+*Document generated by Trae AI Pair Programmer.*

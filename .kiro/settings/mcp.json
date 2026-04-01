@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "codex": {
+      "command": "npx",
+      "args": ["-y", "@gudastudio/codex-mcp"],
+      "env": {
+        "CODEX_API_KEY": "YOUR_API_KEY_HERE"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

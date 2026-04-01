@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力产业场景</title>
+    <style>
+        :root {
+            /* Palette: Deep Navy, Slate, Clean White, Accent Orange */
+            --primary-navy: #0F172A;
+            --secondary-slate: #475569;
+            --accent-orange: #F97316;
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Swiss Style */
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: var(--text-main);
+        }
+
+        .container {
+            width: 1480px;
+            height: auto;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            background: #FFFFFF;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Header Section */
+        .header-section {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .main-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--primary-navy);
+            position: relative;
+        }
+
+        .main-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-orange);
+            margin-top: 12px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        /* Card Design */
+        .insight-card {
+            background: var(--card-bg);
+            border-top: 2px solid var(--primary-navy); /* Top accent border */
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border-top-color: var(--accent-orange);
+        }
+
+        /* Card Header Area */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .card-number {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            fill: var(--secondary-slate);
+            opacity: 0.8;
+        }
+
+        /* Content Area */
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .tags-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 11px;
+            color: var(--primary-navy);
+            background: #F1F5F9;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .card-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--secondary-slate);
+            text-align: justify;
+        }
+
+        .highlight {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Abstract Background Graphic (Optional) */
+        .bg-graphic {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 60px;
+            height: 60px;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header-section">
+            <div class="main-title">算力产业场景洞察</div>
+            <div class="subtitle">Computing Power Scenarios 2025</div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid-container">
+            
+            <!-- Card 01 -->
+            <div class="insight-card">
+                <div class="card-header">
+                    <span class="card-number">01</span>
+                    <!-- Abstract Line Icon: Manufacturing -->
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M2 22h20V2z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M6 18h2v-4h2v4h2v-6h2v6h2" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div class="card-title">工业制造</div>
+                <div class="tags-row">
+                    <span class="tag">数字孪生</span>
+                    <span class="tag">智能工厂</span>
+                </div>
+                <div class="card-text">
+                    聚焦仿真与流程优化。利用<span class="highlight">HPC</span>算力重构生产全链路，推动制造业向智能化、绿色化深度转型，打造核心竞争引擎。
+                </div>
+            </div>
+
+            <!-- Card 02 -->
+            <div class="insight-card">
+                <div class="card-header">
+                    <span class="card-number">02</span>
+                    <!-- Abstract Line Icon: Finance -->
+                    <svg class="card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6v12M8 12h8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div class="card-title">金融科技</div>
+                <div class="tags-row">
+                    <span class="tag">量化交易</span>
+                    <span class="tag">智能风控</span>
+                </div>
+                <div class="card-text">
+                    支撑海量实时交易分析。高性能算力加速<span class="highlight">AI模型迭代</span>，构建安全高效的金融业务体系，确立数字化竞争优势。
+                </div>
+            </div>
+
+            <!-- Card 03 -->
+            <div class="insight-card">
+                <div class="card-header">
+                    <span class="card-number">03</span>
+                    <!-- Abstract Line Icon: Education -->
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 3L2 8l10 5 10-5-10-5zM2 17l10 5 10-5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div class="card-title">教育科研</div>
+                <div class="tags-row">
+                    <span class="tag">大模型训练</span>
+                    <span class="tag">虚拟实验</span>
+                </div>
+                <div class="card-text">
+                    加速科学模拟与推演。算力构建<span class="highlight">知识创新底座</span>，推动科研成果产出与教育普惠化，驱动基础研究跨越式发展。
+                </div>
+            </div>
+
+            <!-- Card 04 -->
+            <div class="insight-card">
+                <div class="card-header">
+                    <span class="card-number">04</span>
+                    <!-- Abstract Line Icon: Healthcare -->
+                    <svg class="card-icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v10M7 12h10" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div class="card-title">医疗健康</div>
+                <div class="tags-row">
+                    <span class="tag">基因测序</span>
+                    <span class="tag">多维决策</span>
+                </div>
+                <div class="card-text">
+                    赋能精准诊断与药物研发。高性能计算支持<span class="highlight">复杂病例分析</span>，加速医疗服务从经验驱动向数据驱动的根本性变革。
+                </div>
+            </div>
+
+            <!-- Card 05 -->
+            <div class="insight-card">
+                <div class="card-header">
+                    <span class="card-number">05</span>
+                    <!-- Abstract Line Icon: Smart City -->
+                    <svg class="card-icon" viewBox="0 0 24 24"><rect x="4" y="10" width="4" height="10" fill="none" stroke="currentColor" stroke-width="2"/><rect x="10" y="6" width="4" height="14" fill="none" stroke="currentColor" stroke-width="2"/><rect x="16" y="2" width="4" height="18" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div class="card-title">智慧城市</div>
+                <div class="tags-row">
+                    <span class="tag">城市大脑</span>
+                    <span class="tag">数据协同</span>
+                </div>
+                <div class="card-text">
+                    构建韧性城市生态。实时处理跨部门数据，推动城市治理向<span class="highlight">数字化跃迁</span>，高效响应应急事件与资源调度挑战。
+                </div>
+            </div>
+
+            <!-- Card 06 -->
+            <div class="insight-card">
+                <div class="card-header">
+                    <span class="card-number">06</span>
+                    <!-- Abstract Line Icon: Transport -->
+                    <svg class="card-icon" viewBox="0 0 24 24"><circle cx="7" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2 17h3M9 17h6M19 17h3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 17V8h10v9M15 8l4 4v5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                </div>
+                <div class="card-title">交通物流</div>
+                <div class="tags-row">
+                    <span class="tag">自动驾驶</span>
+                    <span class="tag">智慧物流</span>
+                </div>
+                <div class="card-text">
+                    重塑供应链生态。实时算力优化路径调度，赋能<span class="highlight">车路协同</span>与无人配送，实现物流体系的极致降本增效。
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

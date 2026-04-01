@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算力分类</title>
+    <style>
+        :root {
+            --primary-red: #B71C1C;
+            --arrow-color: #F5CBA7; /* Peach */
+            --bg-color: #FFFFFF;
+            --text-main: #333333;
+            --text-white: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 1480px;
+            /* Auto height to fit content */
+            height: auto; 
+            padding: 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* 
+         * Staggered Layout Container 
+         * We use a grid or flex with margins to create the step effect
+         */
+        .flow-wrapper {
+            width: 100%;
+            max-width: 1200px; /* Constrain width for better staggering visual */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .class-card {
+            width: 750px; /* Fixed width as requested */
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+            box-sizing: border-box;
+            margin-bottom: 50px; /* Space for arrows */
+        }
+
+        /* Color Variants */
+        .card-white {
+            background: #FFFFFF;
+            border: 2px solid var(--primary-red);
+            color: var(--text-main);
+        }
+
+        .card-red {
+            background: var(--primary-red);
+            border: 2px solid var(--primary-red);
+            color: var(--text-white);
+        }
+
+        /* Staggered Positions */
+        .step-1 {
+            align-self: flex-start; /* Left aligned */
+            margin-left: 0;
+        }
+
+        .step-2 {
+            align-self: center; /* Center aligned */
+            /* Shift slightly right from center if needed, or just center */
+            /* To create a true "step" from left to right, we can use margins */
+            align-self: flex-start;
+            margin-left: 200px; /* Indent from left */
+        }
+
+        .step-3 {
+            align-self: flex-start;
+            margin-left: 400px; /* Further indent */
+            margin-bottom: 0;
+        }
+
+        /* Typography */
+        .card-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        .card-content {
+            font-size: 18px;
+            line-height: 1.6;
+            text-align: justify;
+            font-weight: 400;
+        }
+
+        /* SVG Arrows */
+        .arrow-svg {
+            position: absolute;
+            z-index: 1;
+            width: 60px;
+            height: 80px;
+            fill: var(--arrow-color);
+            /* Drop shadow for arrow */
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+        }
+
+        /* Arrow Positioning */
+        /* Arrow 1 connects Step 1 to Step 2 */
+        .arrow-1 {
+            top: 140px; /* Approx bottom of Card 1 */
+            left: 500px; /* Approx center-right of Card 1 */
+        }
+
+        /* Arrow 2 connects Step 2 to Step 3 */
+        .arrow-2 {
+            top: 360px; /* Approx bottom of Card 2 */
+            left: 700px; /* Approx center-right of Card 2 */
+        }
+
+        /* Responsive adjustments for the arrow positions based on card height */
+        /* Since text length is fixed, we can hardcode for now, but better to be relative */
+        
+        /* 
+           Better Approach: Place arrow inside the card div but absolutely positioned 
+           to stick out the bottom.
+        */
+        .connector-arrow {
+            position: absolute;
+            bottom: -65px; /* Stick out bottom */
+            right: 150px; /* Position from right edge */
+            width: 60px;
+            height: 80px;
+            z-index: 1;
+        }
+
+        /* Custom Arrow Shape using CSS Borders or SVG */
+        /* Using CSS Triangle + Rectangle for simplicity and crispness */
+        .arrow-body {
+            width: 24px;
+            height: 40px;
+            background-color: var(--arrow-color);
+            margin: 0 auto;
+        }
+
+        .arrow-head {
+            width: 0; 
+            height: 0; 
+            border-left: 28px solid transparent;
+            border-right: 28px solid transparent;
+            border-top: 28px solid var(--arrow-color);
+            margin-left: -16px; /* Center with body (24/2 - 28 = -16) */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="flow-wrapper">
+            
+            <!-- Step 1: General Computing -->
+            <div class="class-card card-white step-1">
+                <div class="card-content">
+                    <span class="card-title">通用算力：</span>是基础计算的“基石”，以CPU芯片输出的计算能力为主。其单位算力成本较低，易于大规模部署，是云计算、边缘计算等场景的主流选择。
+                </div>
+                <!-- Connector Arrow -->
+                <div class="connector-arrow">
+                    <div class="arrow-body"></div>
+                    <div class="arrow-head"></div>
+                </div>
+            </div>
+
+            <!-- Step 2: Intelligent Computing -->
+            <div class="class-card card-red step-2">
+                <div class="card-content">
+                    <span class="card-title">智能算力：</span>AI时代的“引擎”。基于GPU、FPGA、ASIC等AI芯片，专注于人工智能训练和推理任务，核心优势是高度并行化。
+                </div>
+                <!-- Connector Arrow -->
+                <div class="connector-arrow">
+                    <div class="arrow-body"></div>
+                    <div class="arrow-head"></div>
+                </div>
+            </div>
+
+            <!-- Step 3: Super Computing -->
+            <div class="class-card card-white step-3">
+                <div class="card-content">
+                    <span class="card-title">超算算力：</span>科学计算的“巅峰”。通过超级计算机或高性能计算集群提供，专注处理极端复杂或大规模的科学计算任务，核心特点是计算能力极强，能够解决传统计算设备无法完成的挑战，其商业化门槛较高，主要服务于科研和高精尖领域。
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

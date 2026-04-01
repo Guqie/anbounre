@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区域算力发展模式示例</title>
+    <style>
+        :root {
+            --blue: #005EB8;      /* Pinghu: Tech/Classic */
+            --purple: #6A39AF;    /* Tongxiang: Digital/Summit */
+            --teal: #00897B;      /* Datong: Green Energy */
+            --bg-color: #F4F5F7;
+            --card-bg: #FFFFFF;
+            --text-main: #1A1A1A;
+            --text-sub: #595959;
+            --border-color: #E0E0E0;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 1480px;
+            height: 440px;
+            position: relative;
+            background: #FFFFFF;
+            padding: 30px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+            align-items: stretch;
+        }
+
+        /* Card Colors */
+        .card-blue { --theme-color: var(--blue); }
+        .card-purple { --theme-color: var(--purple); }
+        .card-teal { --theme-color: var(--teal); }
+
+        .trend-card {
+            background: var(--card-bg);
+            padding: 0;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #EAEAEA;
+            border-top: 4px solid var(--theme-color);
+            border-radius: 4px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .trend-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Top Section: Numbering & Title */
+        .card-header {
+            padding: 20px 25px 10px;
+            position: relative;
+            border-bottom: 1px dashed #F0F0F0;
+        }
+
+        .region-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .region-subtitle {
+            font-size: 14px;
+            color: var(--theme-color);
+            font-weight: 600;
+            background: rgba(0,0,0,0.03);
+            padding: 2px 8px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .bg-number {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-family: 'Impact', sans-serif;
+            font-size: 48px;
+            color: var(--theme-color);
+            opacity: 0.08;
+            line-height: 1;
+            z-index: 0;
+        }
+
+        /* Body Section */
+        .card-body {
+            padding: 20px 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Strategy List */
+        .strategy-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .strategy-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .item-icon {
+            min-width: 6px;
+            height: 6px;
+            background: var(--theme-color);
+            margin-top: 7px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .item-content {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .item-label {
+            color: var(--text-main);
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        /* Data Block */
+        .data-block {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #F0F0F0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .data-item {
+            flex: 1;
+        }
+
+        .data-item:last-child {
+            text-align: right;
+        }
+
+        .big-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--theme-color);
+            display: block;
+            margin-bottom: 2px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .number-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Tags for visual richness */
+        .tag-row {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .mini-tag {
+            font-size: 10px;
+            color: #777;
+            border: 1px solid #EEE;
+            padding: 1px 5px;
+            border-radius: 2px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="grid-container">
+            
+            <!-- Card 1: Pinghu (Blue) -->
+            <div class="trend-card card-blue">
+                <div class="card-header">
+                    <div class="bg-number">01</div>
+                    <div class="region-title">平湖市</div>
+                    <div class="region-subtitle">“要素-集群-生态”平湖模式</div>
+                </div>
+                <div class="card-body">
+                    <div class="tag-row">
+                        <span class="mini-tag">润泽智算</span>
+                        <span class="mini-tag">光通信矩阵</span>
+                        <span class="mini-tag">产才学院</span>
+                    </div>
+                    <ul class="strategy-list">
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">算力筑基:</span>
+                                依托润泽智算中心，支撑阿里、智谱华章等头部大模型研发。
+                            </div>
+                        </li>
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">链式布局:</span>
+                                联动服务器、光通信、线缆智造，打造长三角特色硬件集群。
+                            </div>
+                        </li>
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">生态赋能:</span>
+                                组建“1+8+N”科研平台，通过普惠补贴降低算力成本。
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="data-block">
+                        <div class="data-item">
+                            <span class="big-number">4.9<small style="font-size:14px">万P</small></span>
+                            <span class="number-label">算力规模 (FLOPS)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="big-number">1+8+N</span>
+                            <span class="number-label">科研平台体系</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Tongxiang (Purple) -->
+            <div class="trend-card card-purple">
+                <div class="card-header">
+                    <div class="bg-number">02</div>
+                    <div class="region-title">桐乡市</div>
+                    <div class="region-subtitle">“乌镇样板”算力经济</div>
+                </div>
+                <div class="card-body">
+                    <div class="tag-row">
+                        <span class="mini-tag">乌镇之光</span>
+                        <span class="mini-tag">车路云一体化</span>
+                        <span class="mini-tag">智能制造</span>
+                    </div>
+                    <ul class="strategy-list">
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">双核驱动:</span>
+                                构建“乌镇之光”超算与联通智算双中心，夯实协同基石。
+                            </div>
+                        </li>
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">精准招商:</span>
+                                放大乌镇峰会效应，实施“会展+场景”模式，吸引领军企业。
+                            </div>
+                        </li>
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">应用转化:</span>
+                                推动算力从“资源消耗”转向“产业增值”，聚焦车路云场景。
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="data-block">
+                        <div class="data-item">
+                            <span class="big-number">双核</span>
+                            <span class="number-label">超算+智算协同</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="big-number">Top</span>
+                            <span class="number-label">车路云标杆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Datong (Teal) -->
+            <div class="trend-card card-teal">
+                <div class="card-header">
+                    <div class="bg-number">03</div>
+                    <div class="region-title">大同市</div>
+                    <div class="region-subtitle">“算电一体”可持续发展</div>
+                </div>
+                <div class="card-body">
+                    <div class="tag-row">
+                        <span class="mini-tag">算电协同</span>
+                        <span class="mini-tag">绿能心脏</span>
+                        <span class="mini-tag">高上架率</span>
+                    </div>
+                    <ul class="strategy-list">
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">垂直模式:</span>
+                                贯通装备制造、网络传输及人才培养全链条，产业反哺社区。
+                            </div>
+                        </li>
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">算电协同:</span>
+                                发挥“绿能心脏”优势，实现绿电与算力深度融合。
+                            </div>
+                        </li>
+                        <li class="strategy-item">
+                            <div class="item-icon"></div>
+                            <div class="item-content">
+                                <span class="item-label">需求驱动:</span>
+                                坚持市场化机制，确保产业商业闭环与资产优质。
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="data-block">
+                        <div class="data-item">
+                            <span class="big-number">90<small style="font-size:14px">%+</small></span>
+                            <span class="number-label">机架上架率</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="big-number">Green</span>
+                            <span class="number-label">绿电核心优势</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

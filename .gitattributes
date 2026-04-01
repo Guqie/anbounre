@@ -1,0 +1,15 @@
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.svg text
+*.pdf binary
+*.docx binary
+*.xlsx binary
+*.xls binary
+*.pptx binary
+*.canvas text

@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重点招商企业产业链全景图 (倒L型布局)</title>
+    <style>
+        :root {
+            --primary-navy: #0F172A;
+            --border-blue: #4F46E5; /* Indigo-600 */
+            --dashed-color: #3B82F6; /* Blue-500 */
+            --bg-color: #FFFFFF;
+            --line-color: #64748B; /* Slate-500 */
+            --text-color: #334155;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            position: relative;
+            width: 1400px;
+            height: 1200px;
+            /* border: 1px solid #eee; Debug border */
+        }
+
+        /* --- TITLE --- */
+        .page-title {
+            position: absolute;
+            left: 40px;
+            top: 40px;
+            writing-mode: vertical-rl;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 10px;
+            color: #000;
+            border-left: 5px solid #000;
+            padding-left: 20px;
+            height: 300px;
+        }
+
+        /* --- SPINE (The Right Vertical Column) --- */
+        .spine-container {
+            position: absolute;
+            right: 100px;
+            top: 100px;
+            bottom: 100px;
+            width: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .spine-node {
+            width: 100px;
+            height: 80px;
+            background: #F1F5F9;
+            border: 3px solid #000;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 900;
+            z-index: 2;
+            box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+
+        .spine-line-vertical {
+            width: 8px;
+            background: var(--line-color);
+            flex-grow: 1;
+            z-index: 1;
+        }
+
+        .arrow-down {
+            width: 0; 
+            height: 0; 
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 16px solid var(--line-color);
+        }
+
+        /* --- THE "L" ARM (Horizontal Line from Upstream) --- */
+        .l-arm {
+            position: absolute;
+            right: 150px; /* Connects to center of Spine */
+            top: 320px; /* Vertical position of the horizontal bar */
+            width: 950px; /* Length to the left */
+            height: 8px;
+            background: var(--line-color);
+            z-index: 1;
+        }
+
+        /* --- UPSTREAM CONTENT (Top & Bottom of L-Arm) --- */
+        
+        /* Common Box Style */
+        .category-box {
+            position: absolute;
+            background: #fff;
+            border: 2px dashed var(--dashed-color);
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .company-container {
+            display: flex;
+            flex-direction: row-reverse; /* Vertical text from right to left */
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .company-text {
+            writing-mode: vertical-rl;
+            font-size: 13px;
+            color: var(--text-color);
+            letter-spacing: 1px;
+            border-left: 1px solid #E2E8F0;
+            padding: 2px 4px;
+            max-height: 180px; /* Limit height */
+        }
+        
+        .company-text:last-child {
+            border-left: none;
+        }
+
+        /* Upstream - Row 1 (Above Arm) */
+        /* 1. Chips */
+        .box-chips {
+            top: 40px;
+            right: 800px;
+            width: 200px;
+            height: 220px;
+        }
+        /* 2. Servers */
+        .box-servers {
+            top: 40px;
+            right: 520px;
+            width: 240px;
+            height: 220px;
+        }
+        /* 3. Network */
+        .box-network {
+            top: 40px;
+            right: 240px;
+            width: 240px;
+            height: 220px;
+        }
+
+        /* Upstream - Row 2 (Below Arm) */
+        /* 4. Power (Left) */
+        .box-power {
+            top: 380px;
+            right: 800px;
+            width: 220px;
+            height: 220px;
+        }
+        /* 5. Cooling (Center) */
+        .box-cooling {
+            top: 380px;
+            right: 520px;
+            width: 240px;
+            height: 220px;
+        }
+        /* 6. Monitoring (Right) */
+        .box-monitor {
+            top: 380px;
+            right: 240px;
+            width: 240px;
+            height: 220px;
+        }
+
+        /* Connecting Lines for Upstream Boxes to L-Arm */
+        .connector-up {
+            position: absolute;
+            width: 4px;
+            background: var(--line-color);
+            height: 60px;
+            top: 260px; /* Connect box bottom to Arm */
+        }
+        .connector-down {
+            position: absolute;
+            width: 4px;
+            background: var(--line-color);
+            height: 60px;
+            top: 320px; /* Connect Arm to box top */
+        }
+
+        /* --- MIDSTREAM CONTENT --- */
+        .mid-arm {
+            position: absolute;
+            right: 150px;
+            top: 750px;
+            width: 700px;
+            height: 6px;
+            background: var(--line-color);
+            z-index: 1;
+        }
+
+        /* 7. Service */
+        .box-service {
+            top: 680px;
+            right: 520px;
+            width: 240px;
+            height: 240px;
+        }
+
+        /* 8. Platform */
+        .box-platform {
+            top: 680px;
+            right: 240px;
+            width: 240px;
+            height: 240px;
+        }
+
+        /* --- DOWNSTREAM CONTENT --- */
+        /* 9. Data */
+        .box-data {
+            top: 980px;
+            right: 240px;
+            width: 520px; /* Wide box */
+            height: 150px;
+            flex-direction: row; /* Horizontal layout for title/content */
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        .box-data .company-container {
+            flex-direction: row; /* Horizontal list for downstream */
+            writing-mode: horizontal-tb;
+            gap: 30px;
+        }
+        
+        .box-data .company-text {
+            writing-mode: horizontal-tb;
+            border-left: none;
+            border-right: 1px solid #E2E8F0;
+            padding-right: 20px;
+            font-size: 16px;
+            max-height: auto;
+        }
+
+        .down-arrow-large {
+            position: absolute;
+            right: 500px;
+            top: 930px;
+            font-size: 40px;
+            color: var(--line-color);
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        
+        <!-- Left Title -->
+        <div class="page-title">重点招商企业</div>
+
+        <!-- Right Spine -->
+        <div class="spine-container">
+            <div class="spine-node" style="margin-top: 200px;">上游</div> <!-- Aligned with Arm -->
+            <div class="spine-line-vertical"></div>
+            <div class="spine-node" style="margin-top: 0px;">中游</div>
+            <div class="spine-line-vertical"></div>
+            <div class="spine-node">下游</div>
+        </div>
+
+        <!-- Horizontal Arms -->
+        <div class="l-arm"></div> <!-- Upstream Arm -->
+        <div class="mid-arm"></div> <!-- Midstream Arm -->
+
+        <!-- UPSTREAM ROW 1 (Chips, Server, Network) -->
+        <div class="connector-up" style="right: 900px;"></div>
+        <div class="box-chips category-box">
+            <div class="company-container">
+                <span class="company-text">无锡奥特维科技</span>
+                <span class="company-text">无锡华润上华科技</span>
+                <span class="company-text">海光信息技术</span>
+            </div>
+            <div class="category-title" style="margin-top:auto;">芯片设计与制造</div>
+        </div>
+
+        <div class="connector-up" style="right: 640px;"></div>
+        <div class="box-servers category-box">
+            <div class="company-container">
+                <span class="company-text">无锡宏创盛安</span>
+                <span class="company-text">云尖信息技术</span>
+                <span class="company-text">烽火超微信息</span>
+                <span class="company-text">超聚变数字技术</span>
+                <span class="company-text">河南昆仑技术</span>
+                <span class="company-text">广州广电五舟</span>
+            </div>
+            <div class="category-title" style="margin-top:auto;">服务器与计算设备</div>
+        </div>
+
+        <div class="connector-up" style="right: 360px;"></div>
+        <div class="box-network category-box">
+            <div class="company-container">
+                <span class="company-text">锐捷网络</span>
+                <span class="company-text">深圳易天光通信</span>
+                <span class="company-text">深圳友联科技</span>
+                <span class="company-text">深圳市飞速创新</span>
+                <span class="company-text">易飞扬通信技术</span>
+            </div>
+            <div class="category-title" style="margin-top:auto;">网络与通信设备</div>
+        </div>
+
+
+        <!-- UPSTREAM ROW 2 (Power, Cooling, Monitor) -->
+        <div class="connector-down" style="right: 900px;"></div>
+        <div class="box-power category-box">
+            <div class="category-title">供配电系统</div>
+            <div class="company-container">
+                <span class="company-text">杭州中恒电气</span>
+                <span class="company-text">深圳科士达科技</span>
+                <span class="company-text">罗格朗</span>
+                <span class="company-text">山特电子</span>
+                <span class="company-text">深圳麦格米特</span>
+                <span class="company-text">威腾电气集团</span>
+            </div>
+        </div>
+
+        <div class="connector-down" style="right: 640px;"></div>
+        <div class="box-cooling category-box">
+            <div class="category-title">制冷系统</div>
+            <div class="company-container">
+                <span class="company-text">兰洋（宁波）</span>
+                <span class="company-text">深圳市英维克</span>
+                <span class="company-text">南京佳力图</span>
+                <span class="company-text">上海熙德热传</span>
+            </div>
+        </div>
+
+        <div class="connector-down" style="right: 360px;"></div>
+        <div class="box-monitor category-box">
+            <div class="category-title">监控与管理系统</div>
+            <div class="company-container">
+                <span class="company-text">深圳明阳电路</span>
+                <span class="company-text">深圳市共济科技</span>
+                <span class="company-text">南京普天天纪</span>
+                <span class="company-text">依米康科技集团</span>
+            </div>
+        </div>
+
+
+        <!-- MIDSTREAM (Service, Platform) -->
+        <!-- Note: Midstream arm is already drawn -->
+        <div class="box-service category-box">
+            <div class="category-title">算力服务提供商</div>
+            <div class="company-container">
+                <span class="company-text">广州尚航信息</span>
+                <span class="company-text">南京中科逆熵</span>
+                <span class="company-text">浙江德塔森特</span>
+                <span class="company-text">苏州超集信息</span>
+                <span class="company-text">是石科技</span>
+            </div>
+        </div>
+
+        <div class="box-platform category-box">
+            <div class="category-title">算力平台与运营</div>
+            <div class="company-container">
+                <span class="company-text">赛特斯信息</span>
+                <span class="company-text">江苏博云科技</span>
+                <span class="company-text">杭州骋风而来</span>
+                <span class="company-text">杭州谐云科技</span>
+                <span class="company-text">浙大网新科技</span>
+            </div>
+        </div>
+
+        <!-- DOWNSTREAM (Data) -->
+        <div class="down-arrow-large">↓</div>
+        <div class="box-data category-box">
+            <div class="category-title" style="writing-mode: vertical-rl; margin:0; font-size:24px;">数据服务</div>
+            <div class="company-container">
+                <span class="company-text">澳鹏科技（无锡）有限公司</span>
+                <span class="company-text">杭州景联文科技有限公司</span>
+                <span class="company-text">标贝（青岛）科技有限公司</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
